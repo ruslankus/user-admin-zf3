@@ -1,0 +1,1 @@
+socat -d -d -lf /tmp/socat.txt TCP-L:2375,fork UNIX:/var/run/docker.sock

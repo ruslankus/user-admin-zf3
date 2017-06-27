@@ -1,0 +1,4 @@
+./doctrine-module orm:convert-mapping annotation module/Cms/src --namespace="Cms\Entity\\" --from-database
+
+./doctrine-module orm:generate-entities module/Cms/src --generate-annotations=true
+
