@@ -4,6 +4,7 @@ namespace User\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use User\Entity\User;
+use User\Form\UserForm;
 use User\Service\UserManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -32,7 +33,9 @@ class UserController extends AbstractActionController
 
     public function addAction()
     {
-        return new ViewModel();
+        $form = new UserForm('create', $this->entityManager);
+
+        return new ViewModel(compact('form'));
     }
 
 
