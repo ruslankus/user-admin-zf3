@@ -7,6 +7,7 @@ use MailService\Service\MailService;
 use User\Entity\User;
 use Zend\Math\Rand;
 
+
 class UserManager
 {
     protected $em;

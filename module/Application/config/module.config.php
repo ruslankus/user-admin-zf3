@@ -7,6 +7,10 @@
 
 namespace Application;
 
+use Application\Service\Factory\NavNanagerFactory;
+use Application\Service\NavManager;
+use Application\View\Helper\Breadcrumbs;
+use Application\View\Helper\Factory\MenuFactory;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -51,6 +55,11 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
         ],
     ],
+    'service_manager' => [
+        'factories' => [
+            NavManager::class => NavNanagerFactory::class
+        ]
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -62,9 +71,20 @@ return [
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'menuMain'                => __DIR__ . '/../view/partials/menu/main-menu.phtml'
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            \Application\View\Helper\Menu::class => MenuFactory::class,
+            Breadcrumbs::class => InvokableFactory::class
+        ],
+        'aliases' => [
+            'mainMenu' => \Application\View\Helper\Menu::class,
+            'pageBreadcrumbs' => Breadcrumbs::class
+        ]
+    ]
 ];

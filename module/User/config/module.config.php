@@ -2,6 +2,7 @@
 namespace User;
 
 use User\Controller\AuthController;
+use User\Controller\Factory\UserControllerFactory;
 use User\Controller\UserController;
 use User\Service\Factory\UserManagerFactory;
 use Zend\Router\Http\Literal;
@@ -47,7 +48,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\AuthController::class => InvokableFactory::class,
-            UserController::class => InvokableFactory::class
+            UserController::class => UserControllerFactory::class
 
         ],
     ],

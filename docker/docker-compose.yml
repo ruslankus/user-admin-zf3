@@ -5,7 +5,7 @@ services:
       image: zf-user
       container_name: zf-user
       environment:
-          XDEBUG_CONFIG: remote_host=192.168.0.103
+          XDEBUG_CONFIG: remote_host=192.168.0.104
       ports:
           - "80:80"
       volumes:

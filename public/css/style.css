@@ -1,5 +1,4 @@
 body {
-    padding-top: 60px;
     padding-bottom: 40px;
 }
 
@@ -26,8 +25,34 @@ body {
     background-color: #57a900;
 }
 
+.btn-success:active, .btn-success.active {
+    background-color: #57a900;
+}
+
 div.container a.navbar-brand > img {
     display: inline;
     margin-right: 4px;
-    margin-top: -2px;
+}
+
+div.app-caption {
+    padding: 25px 0px;
+    font-size:3.0em;
+    font-weight: bold;
+    color:#6aacaf
+}
+
+form ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px 5px;
+}
+
+form ul li {
+    color: red;
+}
+
+.alert ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px 5px;
 }
