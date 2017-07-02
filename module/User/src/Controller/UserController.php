@@ -35,6 +35,22 @@ class UserController extends AbstractActionController
     {
         $form = new UserForm('create', $this->entityManager);
 
+        $request = $this->getRequest();
+        if($request->isPost()){
+
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+
+            if($form->isValid()){
+
+                $clearData = $form->getData();
+                $newUser = $this->userManger->addUser($clearData);
+                if(!empty($newUser)){
+                    return $this->redirect()->toRoute('users', ['action' => 'view', 'id' => $newUser->getId() ]);
+                }
+            }
+        }
+
         return new ViewModel(compact('form'));
     }
 
@@ -48,6 +64,12 @@ class UserController extends AbstractActionController
     public function viewAction()
     {
 
+        $userId = (int)$this->params()->fromRoute('id');
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $user = $userRepo->find($userId);
+
+
+        return new ViewModel(compact('user'));
     }
 
 

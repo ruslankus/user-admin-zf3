@@ -2,7 +2,10 @@
 
 namespace User\Form;
 
+use User\Validator\UserExistsValidator;
 use Zend\Form\Form;
+use Zend\InputFilter\InputFilter;
+use Zend\Validator\Hostname;
 
 class UserForm extends Form
 {
@@ -103,7 +106,108 @@ class UserForm extends Form
 
     protected function addInputFilter()
     {
+        $inputFilter = new InputFilter();
 
+        $inputFilter->add(
+            [
+                'name' => 'email',
+                'required' => true,
+                'filters' => [
+                    ['name' => 'StringTrim']
+                ],
+                'validators' => [
+                    [
+                        'name'    => 'StringLength',
+                        'options' => [
+                            'min' => 1,
+                            'max' => 64
+                        ]
+
+                    ],
+                    [
+                        'name' => "EmailAddress",
+                        'options' => [
+                            'allow' => Hostname::ALLOW_DNS,
+                            'usesMxCheck' => false
+                        ]
+                    ],
+                    [
+                        'name' => UserExistsValidator::class,
+                        'options' => [
+                            'entityManager' => $this->entityManager,
+                            'user' => $this->user
+                        ]
+                    ]
+
+                ]
+            ]
+        );//add Email
+
+
+        $inputFilter->add(
+            [
+                'name'     => 'full_name',
+                'required' => true,
+                'filters'  => [
+                    ['name' => 'StringTrim'],
+                ],
+                'validators' => [
+                    [
+                        'name'    => 'StringLength',
+                        'options' => [
+                            'min' => 1,
+                            'max' => 128
+                        ]
+                    ]
+                ]
+            ]
+        );//add fullname
+
+        $inputFilter->add(
+            [
+                'name'     => 'password',
+                'required' => true,
+                'filters'  => [],
+                'validators' => [
+                    [
+                        'name'    => 'StringLength',
+                        'options' => [
+                            'min' => 6,
+                            'max' => 32
+                        ]
+                    ]
+                ]
+            ]
+        );//add password
+
+
+        $inputFilter->add([
+            'name'     => 'confirm_password',
+            'required' => true,
+            'filters'  => [],
+            'validators' => [
+                [
+                    'name'    => 'Identical',
+                    'options' => [
+                        'token' => 'password',
+                    ]
+                ]
+            ]
+
+        ]);//add confirm_password
+
+        $inputFilter->add([
+            'name'     => 'status',
+            'required' => true,
+            'filters'  => [
+                ['name' => 'ToInt'],
+            ],
+            'validators' => [
+                ['name'=>'InArray', 'options'=>['haystack'=>[1, 2]]]
+            ]
+        ]);
+
+        $this->setInputFilter($inputFilter);
     }
 
 }

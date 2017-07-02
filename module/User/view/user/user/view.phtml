@@ -1,0 +1,57 @@
+<?php
+$user = $this->user;
+
+$this->headTitle('View User');
+$this->mainMenu()->setActiveItemId('users');
+
+$this->pageBreadcrumbs()->setItems([
+    'Home'=>$this->url('home'),
+    'Manage Users'=>$this->url('users'),
+    'View User'=>$this->url('users', ['action'=>'view', 'id'=>$user->getId()])
+]);
+
+?>
+
+<h1>View User</h1>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped" >
+            <tr>
+                <th>ID:</th>
+                <td><?= $this->escapeHtml($user->getId())?></td>
+            </tr>
+
+            <tr>
+                <th>E-mail</th>
+                <td><?= $this->escapeHtml($user->getEmail())?></td>
+            </tr>
+
+            <tr>
+                <th>Full Name</th>
+                <td><?= $this->escapeHtml($user->getFullName())?></td>
+            </tr>
+
+            <tr>
+                <th>Full Name</th>
+                <td><?= $this->escapeHtml($user->getId())?></td>
+            </tr>
+
+            <tr>
+                <th>Date created</th>
+                <td>
+                    <?php
+                    $dateObj = $user->getDateCreated();
+                    echo $dateObj->format('Y-m-d H:i:s');
+                    ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Status:</th>
+                <td><?= $user->getStatus()?></td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>

@@ -41,7 +41,7 @@
         <td>
             <?php
                 $date = $user->getDateCreated();
-                echo $date->format('Y-m-d H:m:s');
+                echo $date->format('Y-m-d H:i:s');
             ?>
         </td>
         <td><?= $this->escapeHtml($user->getStatus())?></td>
