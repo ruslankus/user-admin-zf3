@@ -57,7 +57,45 @@ class UserController extends AbstractActionController
 
     public function editAction()
     {
-        return new ViewModel();
+        $userId = (int)$this->params()->fromRoute('id');
+        $response = $this->getResponse();
+        $request = $this->getRequest();
+        if(empty($userId)){
+            //TODO Need to make not found controller
+            $response->setStatusCode(404);
+            throw new \RuntimeException('User not found', 404);
+
+        }
+
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $user = $userRepo->find($userId);
+        if(empty($user)){
+            //TODO Need to make not found controller
+            $response->setStatusCode(404);
+            throw new \RuntimeException('User not found', 404);
+
+        }
+
+        $form = new UserForm('update',$this->entityManager, $user);
+
+        if($request->isPost()){
+
+
+        }else{
+            $form->setData([
+                'full_name' => $user->getFullName(),
+                'email' => $user->getEmail(),
+                'status' => $user->getStatus()
+            ]);
+        }
+
+
+
+
+
+
+
+        return new ViewModel(compact('form', 'user'));
     }
 
 

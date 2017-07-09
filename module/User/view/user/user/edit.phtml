@@ -1,0 +1,78 @@
+<?php
+$form = $this->form;
+$user = $this->user;
+$this->mainMenu()->setActiveItemId('users');
+
+$this->pageBreadcrumbs()->setItems([
+    'Home'=>$this->url('home'),
+    'Manage Users'=>$this->url('users'),
+    'Edit User'=>$this->url('users',['action' => 'edit', 'id' => $user->getId()]),
+]);
+
+$form->prepare();
+
+?>
+<h1>Edit user <?= $this->escapeHtml($user->getEmail())?></h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?php
+                $email = $form->get('email');
+                $email->setAttributes([
+                    'class' => 'form-control',
+                    'placeholder' => 'name@example.com'
+                ]);
+
+            ?>
+            <?= $this->formLabel($email)?>
+            <?= $this->formElement($email) ?>
+            <?= $this->formElementErrors($email) ?>
+
+        </div>
+        <div class="form-group">
+            <?php
+            $fullName = $form->get('full_name');
+            $fullName->setAttributes([
+                'class' => 'form-control',
+                'placeholder' => 'name@example.com'
+            ]);
+
+            ?>
+            <?= $this->formLabel($fullName)?>
+            <?= $this->formElement($fullName) ?>
+            <?= $this->formElementErrors($fullName) ?>
+
+        </div>
+        <div class="form-group">
+            <?php
+            $status = $form->get('status');
+            $status->setAttributes([
+                'class' => 'form-control',
+                'placeholder' => 'name@example.com'
+            ]);
+
+            ?>
+            <?= $this->formLabel($status)?>
+            <?= $this->formElement($status) ?>
+            <?= $this->formElementErrors($status) ?>
+
+
+        </div>
+
+        <?php
+            $submit = $form->get('submit');
+            $submit->setAttributes([
+                'class' => 'btn btn-primary'
+            ]);
+            $submit->setValue('Save');
+
+            echo $this->formElement($submit);
+        ?>
+
+            <?= $this->form()->closeTag(); ?>
+    </div><!--/ col-md-6 -->
+
+</div><!--/row -->
