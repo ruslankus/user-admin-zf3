@@ -4,6 +4,7 @@ namespace User\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use User\Entity\User;
+use User\Form\PasswordChangeForm;
 use User\Form\UserForm;
 use User\Service\UserManager;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -113,6 +114,54 @@ class UserController extends AbstractActionController
 
     public function changePasswordAction()
     {
+        $id  = (int)$this->params()->fromRoute('id', null);
+        if(empty($id)){
+            $responce = $this->getResponse();
+            $responce->setStatusCode(404);
+            return;
+        }
+
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $user = $userRepo->find($id);
+        if(empty($user)){
+            $responce = $this->getResponse();
+            $responce->setStatusCode(404);
+            return;
+        }
+
+        $form = new PasswordChangeForm();
+
+        $request = $this->request;
+        if($request->isPost()){
+
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+
+            if($form->isValid()){
+
+                $formData = $form->getData();
+
+                $result = $this->userManger->changePassword($user, $formData);
+                $flashMessenger = $this->flashMessenger();
+
+                if(!$result){
+                    $flashMessenger->addErrorMessage(
+                      "Sorry, the old password is incorrect. Could not set the new password."
+                    );
+                }else{
+                    $flashMessenger->addSuccessMessage(
+                        "Changed the password successfully."
+                    );
+                }
+
+                //redirect
+                return $this->redirect()->toRoute('users',['action' => 'view', 'id' => $user->getId()]);
+            }
+
+        }
+
+
+        return new ViewModel(compact('user','form'));
 
     }
 

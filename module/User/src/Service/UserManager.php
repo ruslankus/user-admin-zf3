@@ -5,6 +5,7 @@ namespace User\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use MailService\Service\MailService;
 use User\Entity\User;
+use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
 
 
@@ -97,6 +98,45 @@ class UserManager
         $result = $userEnt->setNewPass($token, $newPass);
 
         return $result;
+    }
+
+
+    public function changePassword(User $user, $data){
+
+        $oldPassword = $data['old-password'];
+
+        $validPassResult = $this->validatePassword($user, $oldPassword);
+
+        if(!$validPassResult){
+            return false;
+        }
+
+        $bcrypt = new Bcrypt();
+
+        $newPassHash = $bcrypt->create($data['new-password']);
+        $user->setPassword($newPassHash);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return true;
+    }
+
+
+
+    public function validatePassword(User $user, $password)
+    {
+
+        $bcrypt = new Bcrypt();
+        $passwordHass = $user->getPassword();
+
+        if($bcrypt->verify($password, $passwordHass)){
+
+            return true;
+        }
+
+        return false;
+
     }
 
 }
