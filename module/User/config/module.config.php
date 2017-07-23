@@ -28,6 +28,16 @@ return [
                 ]
             ],
 
+            'reset-password' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/reset-password',
+                    'defaults' => [
+                        'controller' => UserController::class,
+                        'action' => 'reset-password'
+                    ]
+                ]
+            ],
 
             'users' => [
                 'type' => Segment::class,

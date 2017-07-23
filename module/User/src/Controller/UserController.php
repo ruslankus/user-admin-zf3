@@ -5,6 +5,7 @@ namespace User\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use User\Entity\User;
 use User\Form\PasswordChangeForm;
+use User\Form\PasswordResetForm;
 use User\Form\UserForm;
 use User\Service\UserManager;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -168,7 +169,19 @@ class UserController extends AbstractActionController
 
     public function resetPasswordAction()
     {
+        $form = new PasswordResetForm();
 
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $form->setData($this->params()->fromPost());
+
+            if($form->isValid()){
+                //do something
+            }
+        }
+
+
+        return new ViewModel(compact('form'));
     }
 
 }
