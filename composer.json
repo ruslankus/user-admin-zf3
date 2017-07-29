@@ -23,7 +23,8 @@
         "zendframework/zend-mail": "^2.8",
         "zendframework/zend-i18n": "^2.7",
         "zendframework/zend-session": "^2.8",
-        "zendframework/zend-mvc-plugin-flashmessenger": "^1.0"
+        "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
+        "zendframework/zend-captcha": "^2.7"
     },
     "autoload": {
         "psr-4": {
