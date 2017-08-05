@@ -22,7 +22,11 @@ class LoginForm extends Form
     public function addElements()
     {
         $this->add([
-            'type' => 'password'
+            'type' => 'password',
+            'name' => 'email',
+            'options' => [
+                'label' => 'Your email'
+            ]
 
         ]);
     }
