@@ -1,0 +1,24 @@
+version: '2'
+services:
+  zf-user:
+      build: .
+      image: zf-user
+      container_name: zf-user
+      environment:
+          XDEBUG_CONFIG: remote_host=192.168.0.100
+      ports:
+          - "80:80"
+      volumes:
+          - "../:/var/www/site"
+      restart: always
+  maria-zf-user:
+      image: mariadb
+      container_name: maria-zf-user
+      ports:
+          - "3306:3306"
+      volumes:
+          - "./.data/db:/var/lib/mysql:rw"
+      restart: always
+      environment:
+         - "MYSQL_USER=root"
+         - "MYSQL_ROOT_PASSWORD=mysql"

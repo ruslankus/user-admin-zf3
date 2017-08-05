@@ -9,7 +9,7 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host'     => '172.18.0.1',
+                    'host'     => '192.168.0.104',
                     'port'     => '3306',
                     'user'     => 'root',
                     'password' => 'mysql',
